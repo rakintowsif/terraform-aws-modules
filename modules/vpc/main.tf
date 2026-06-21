@@ -11,9 +11,10 @@ data "aws_availability_zones" "available" {}
 
 locals {
   availability_zones = length(var.availability_zones) > 0 ? var.availability_zones : slice(data.aws_availability_zones.available.names, 0, 3)
-  public_cidrs = { for idx, cidr in cidrsubnets(var.vpc_cidr, 8, 1, 2, 3) : "public-${idx + 1}" => cidr }
-  private_cidrs = { for idx, cidr in cidrsubnets(var.vpc_cidr, 8, 4, 5, 6) : "private-${idx + 1}" => cidr }
-  db_cidrs = { for idx, cidr in cidrsubnets(var.vpc_cidr, 8, 7, 8, 9) : "db-${idx + 1}" => cidr }
+  all_cidrs = cidrsubnets(var.vpc_cidr, 8, 0, 1, 2, 3, 4, 5, 6, 7, 8)
+  public_cidrs  = { for idx, cidr in slice(local.all_cidrs, 0, 3) : "public-${idx + 1}" => cidr }
+  private_cidrs = { for idx, cidr in slice(local.all_cidrs, 3, 6) : "private-${idx + 1}" => cidr }
+  db_cidrs      = { for idx, cidr in slice(local.all_cidrs, 6, 9) : "db-${idx + 1}" => cidr }
 }
 
 resource "aws_vpc" "this" {

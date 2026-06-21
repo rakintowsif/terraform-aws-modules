@@ -74,6 +74,24 @@ variable "backup_retention_period" {
   default     = 7
 }
 
+variable "skip_final_snapshot" {
+  description = "Whether to skip a final snapshot when the RDS instance is destroyed."
+  type        = bool
+  default     = true
+}
+
+variable "final_snapshot_identifier" {
+  description = "Name of the final DB snapshot when skip_final_snapshot is false."
+  type        = string
+  default     = null
+}
+
+variable "deletion_protection" {
+  description = "Whether deletion protection is enabled for the RDS instance."
+  type        = bool
+  default     = false
+}
+
 variable "tags" {
   description = "Tags for RDS resources."
   type        = map(string)

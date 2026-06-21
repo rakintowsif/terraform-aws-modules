@@ -15,6 +15,12 @@ variable "versioning" {
   default     = true
 }
 
+variable "force_destroy" {
+  description = "Whether to delete all objects when the bucket is destroyed."
+  type        = bool
+  default     = false
+}
+
 variable "tags" {
   description = "Tags to apply to the S3 bucket."
   type        = map(string)
