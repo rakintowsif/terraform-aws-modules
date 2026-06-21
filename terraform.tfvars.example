@@ -1,0 +1,13 @@
+project_name        = "my-project"
+aws_region          = "us-east-1"
+app_bucket_name     = "my-project-app-bucket"
+backend_bucket      = "my-terraform-state-bucket"
+backend_dynamodb_table = "my-terraform-locks"
+backend_key         = "terraform.tfstate"
+backend_region      = "us-east-1"
+db_password         = "YourSecurePassword123!"
+
+# Optional values
+# ec2_key_name      = "my-keypair"
+# availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+# tags = { Environment = "dev" }
