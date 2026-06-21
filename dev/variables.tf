@@ -4,6 +4,12 @@ variable "project_name" {
   default     = "terraform-aws-modules"
 }
 
+variable "environment" {
+  description = "Deployment environment name."
+  type        = string
+  default     = "dev"
+}
+
 variable "aws_region" {
   description = "AWS region to deploy resources into."
   type        = string
@@ -11,9 +17,9 @@ variable "aws_region" {
 }
 
 variable "availability_zones" {
-  description = "List of AZs used for subnets. If empty, first three AZs are selected."
+  description = "List of AZs used for subnets."
   type        = list(string)
-  default     = []
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
 variable "vpc_cidr" {
@@ -22,26 +28,26 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
-variable "allowed_ssh_cidrs" {
-  description = "CIDR blocks allowed to SSH into EC2."
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
-
 variable "ec2_key_name" {
-  description = "Optional EC2 key pair name for SSH access."
+  description = "EC2 key pair name for SSH access."
   type        = string
   default     = ""
 }
 
+variable "allowed_ssh_cidrs" {
+  description = "CIDR blocks allowed to SSH into EC2 instances."
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "public_instance_type" {
-  description = "EC2 instance type for the public instance."
+  description = "EC2 instance type for the public EC2 instance."
   type        = string
   default     = "t3.micro"
 }
 
 variable "private_instance_type" {
-  description = "EC2 instance type for the private instance."
+  description = "EC2 instance type for the private EC2 instance."
   type        = string
   default     = "t3.micro"
 }
@@ -97,26 +103,4 @@ variable "tags" {
   description = "Tags to apply to all created resources."
   type        = map(string)
   default     = {}
-}
-
-variable "backend_bucket" {
-  description = "S3 bucket for Terraform state backend."
-  type        = string
-}
-
-variable "backend_key" {
-  description = "S3 key for Terraform state file."
-  type        = string
-  default     = "terraform.tfstate"
-}
-
-variable "backend_region" {
-  description = "Region of the Terraform backend S3 bucket."
-  type        = string
-  default     = "us-east-1"
-}
-
-variable "backend_dynamodb_table" {
-  description = "DynamoDB table for Terraform state locking."
-  type        = string
 }
